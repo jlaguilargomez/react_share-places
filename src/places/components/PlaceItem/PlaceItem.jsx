@@ -1,4 +1,5 @@
 import Card from '../../../shared/components/UIElements/Card/Card';
+import Button from '../../../shared/components/Button/Button';
 import './PlaceItem.css';
 
 const PlaceItem = ({
@@ -22,9 +23,9 @@ const PlaceItem = ({
           <p>{description}</p>
         </div>
         <div className="place-item__actions">
-          <button>View on a map</button>
-          <button>Edit</button>
-          <button>Delete</button>
+          <Button inverse>View on a map</Button>
+          <Button to={`/places/${id}`}>Edit</Button>
+          <Button danger>Delete</Button>
         </div>
       </Card>
     </li>

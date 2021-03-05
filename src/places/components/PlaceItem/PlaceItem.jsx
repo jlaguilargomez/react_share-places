@@ -5,6 +5,7 @@ import Button from '../../../shared/components/Button/Button';
 import Modal from '../../../shared/components/UIElements/Modal/Modal';
 
 import './PlaceItem.css';
+import Map from '../../../shared/components/UIElements/Map/Map';
 
 const PlaceItem = ({
   id,
@@ -31,7 +32,7 @@ const PlaceItem = ({
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
       >
         <div className="map-container">
-          <h2>THE MAP!</h2>
+          <Map center={coordinates} zoom={16}></Map>
         </div>
       </Modal>
 

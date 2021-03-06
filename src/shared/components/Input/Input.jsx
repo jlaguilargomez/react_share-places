@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 // useReducer a menudo es preferible a useState cuando se tiene una lógica compleja que involucra múltiples subvalores o cuando el próximo estado depende del anterior.
 
 import { validate } from '../../utils/validator';
@@ -33,12 +33,19 @@ const Input = ({
   element,
   errorText,
   validators,
+  onInput,
 }) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: '',
     isTouched: false,
     isValid: false,
   });
+
+  const { value, isValid } = inputState;
+
+  useEffect(() => {
+    onInput(id, inputState.value, inputState.isValid);
+  }, [id, onInput, value, isValid]);
 
   const changeHandler = (event) => {
     dispatch({

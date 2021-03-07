@@ -1,16 +1,15 @@
 import { useCallback, useReducer } from 'react';
 
-import Input from '../../shared/components/Input/Input';
+import Input from '../../../shared/components/Input/Input';
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
-} from '../../shared/utils/validator';
-import Button from '../../shared/components/Button/Button';
-import './NewPlace.css';
+} from '../../../shared/utils/validator';
+import Button from '../../../shared/components/Button/Button';
+
+import '../../../shared/styles/PlaceForm.css';
 
 const formReducer = (state, action) => {
-  console.log('action: ', action);
-  console.log('state: ', state);
   switch (action.type) {
     case 'INPUT_CHANGE':
       let formIsValid = true;
@@ -46,6 +45,10 @@ const NewPlace = () => {
         value: '',
         isValid: false,
       },
+      address: {
+        value: '',
+        isValid: false,
+      },
     },
     isValid: false,
   });
@@ -54,8 +57,13 @@ const NewPlace = () => {
     dispatch({ type: 'INPUT_CHANGE', value, isValid, inputId: id });
   }, []);
 
+  const placeSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs); // Later we will send it to the backend
+  };
+
   return (
-    <form className="place-form">
+    <form className="place-form" onSubmit={placeSubmitHandler}>
       <Input
         id="title"
         element="input"
@@ -71,6 +79,14 @@ const NewPlace = () => {
         label="Description"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (5 characters, at least)"
+        onInput={inputHandler}
+      ></Input>
+      <Input
+        id="address"
+        element="input"
+        label="Address"
+        validators={[VALIDATOR_REQUIRE()]}
+        errorText="Please enter a valid address"
         onInput={inputHandler}
       ></Input>
       <Button type="submit" disabled={!formState.isValid}>

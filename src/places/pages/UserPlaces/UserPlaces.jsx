@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import PlaceList from '../components/PlaceList/PlaceList';
+import PlaceList from '../../components/PlaceList/PlaceList';
 
 const DUMMY_PLACES = [
   {
@@ -48,6 +48,7 @@ const UserPlaces = () => {
   // Obtenemos el identificador de usuario de la ruta y sólo mostramos aquellos lugares creados por el usuario actual
   const userId = useParams().userId;
   const loadedPlaces = DUMMY_PLACES.filter((place) => place.creator === userId);
+
   return <PlaceList items={loadedPlaces}></PlaceList>;
 };
 

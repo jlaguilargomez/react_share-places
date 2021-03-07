@@ -8,9 +8,10 @@ import {
 import './App.css';
 
 import Users from './user/pages/Users';
-import NewPlace from './places/pages/NewPlace';
+import NewPlace from './places/pages/NewPlace/NewPlace';
 import Navigation from './shared/components/Navigation/Navigation';
-import UserPlaces from './places/pages/UserPlaces';
+import UserPlaces from './places/pages/UserPlaces/UserPlaces';
+import UpdatePlace from './places/pages/UpdatePlace/UpdatePlace';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/" exact component={Users}></Route>
           <Route path="/places/new" exact component={NewPlace}></Route>
           <Route path="/:userId/places" exact component={UserPlaces}></Route>
+          <Route path="/places/:placeId" exact component={UpdatePlace}></Route>
 
           {/* Redirigimos a la página de origen en caso de que no coincida con ninguna ruta */}
           <Redirect to="/"></Redirect>

@@ -9,8 +9,6 @@ import Button from '../../shared/components/Button/Button';
 import './NewPlace.css';
 
 const formReducer = (state, action) => {
-  console.log('action: ', action);
-  console.log('state: ', state);
   switch (action.type) {
     case 'INPUT_CHANGE':
       let formIsValid = true;
@@ -54,8 +52,13 @@ const NewPlace = () => {
     dispatch({ type: 'INPUT_CHANGE', value, isValid, inputId: id });
   }, []);
 
+  const placeSubmitHandler = (event) => {
+    event.preventDefault();
+    console.log(formState.inputs); // Later we will send it to the backend
+  };
+
   return (
-    <form className="place-form">
+    <form className="place-form" onSubmit={placeSubmitHandler}>
       <Input
         id="title"
         element="input"
@@ -71,6 +74,14 @@ const NewPlace = () => {
         label="Description"
         validators={[VALIDATOR_REQUIRE(), VALIDATOR_MINLENGTH(5)]}
         errorText="Please enter a valid description (5 characters, at least)"
+        onInput={inputHandler}
+      ></Input>
+      <Input
+        id="address"
+        element="input"
+        label="Address"
+        validators={[VALIDATOR_REQUIRE()]}
+        errorText="Please enter a valid address"
         onInput={inputHandler}
       ></Input>
       <Button type="submit" disabled={!formState.isValid}>

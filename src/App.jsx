@@ -27,26 +27,39 @@ const App = () => {
     setIsLoggedIn(false);
   }, []);
 
+  let routes;
+
+  if (isLoggedIn) {
+    routes = (
+      <Switch>
+        <Route path="/" exact component={Users}></Route>
+        <Route path="/:userId/places" exact component={UserPlaces}></Route>
+        <Route path="/places/new" exact component={NewPlace}></Route>
+
+        <Route path="/places/:placeId" exact component={UpdatePlace}></Route>
+        {/* Redirigimos a la página de origen en caso de que no coincida con ninguna ruta */}
+        <Redirect to="/"></Redirect>
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact component={Users}></Route>
+        <Route path="/:userId/places" exact component={UserPlaces}></Route>
+        <Route path="/auth" exact component={Authenticate}></Route>
+        {/* Redirigimos a la página de origen en caso de que no coincida con ninguna ruta */}
+        <Redirect to="/auth"></Redirect>
+      </Switch>
+    );
+  }
+
   return (
     <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
       <Router>
         <Navigation />
         <main>
           {/* El Switch nos permite que sólo se evalúe una de las rutas y que haga un BREAK después de encontrar la correcta */}
-          <Switch>
-            <Route path="/" exact component={Users}></Route>
-            <Route path="/places/new" exact component={NewPlace}></Route>
-            <Route path="/:userId/places" exact component={UserPlaces}></Route>
-            <Route
-              path="/places/:placeId"
-              exact
-              component={UpdatePlace}
-            ></Route>
-            <Route path="/auth" exact component={Authenticate}></Route>
-
-            {/* Redirigimos a la página de origen en caso de que no coincida con ninguna ruta */}
-            <Redirect to="/"></Redirect>
-          </Switch>
+          {routes}
         </main>
       </Router>
     </AuthContext.Provider>
